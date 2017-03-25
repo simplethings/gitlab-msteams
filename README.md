@@ -27,7 +27,7 @@ If you want to do a quick test feel free to use the installation we set up under
 
     https://teamstest.simplethings.de
     
-But remember that your GitLab-Notifies may contain confidential information! Of course we don't save anything - but use this for testing only.
+But remember that your GitLab-Notifications may contain confidential information! Of course we don't save anything - but use this for testing only.
 
 ## Installation
 
@@ -37,8 +37,9 @@ Just clone the repository
     
 Rename config.template.php to config.php and customize it if needed (usually works out of the box).
 
-Configure your webserver to get web access to the index.php. That's it.
-Try the URL in your Browser - you should get a nice 500-Error with _Microsoft Teams Gateway - no input_
+Configure your webserver to get web access to the index.php. Try the URL in your Browser - you should get a nice 500-Error with _Microsoft Teams Gateway - no input_
+
+Now redirect all request below /webhook to this index.php using Apache RewriteRules or an nginx try_files. **If you use the ?url=xxx Method you don't need this!**
 
 ## Configuration Options
 
