@@ -32,6 +32,15 @@ class GitlabTeamsMessage extends TeamsMessage {
             case 'tag_push':
                 $this->parseTagPush();
                 break;
+            case 'pipeline':
+                $this->parsePipeline();
+                break;
+            case 'build':
+                $this->parseBuild();
+                break;
+            case 'wiki_page':
+                $this->parseWikiPage();
+                break;
             default:
                 $this->parseUnknownInput();
                 break;
@@ -88,9 +97,35 @@ class GitlabTeamsMessage extends TeamsMessage {
 
     function parseTagPush() {
         $this->setText("New Tag ".$this->input['ref']);
+        $this->addActivity("",
+            $this->input['user_name'],
+            $this->input['user_avatar']);
     }
 
     function parsePipeline() {
-        $this->setText("Pipeline");
+        $this->setText("Pipeline ".$this->input['object_attributes']['ref']." (".$this->input['object_attributes']['status'].")");
+        $this->addActivity($this->input['commit']['message'],
+            $this->input['user']['name'].": ",
+            $this->input['user']['avatar_url']);
+
+        $this->addAction('View Commit',$this->input['commit']['url']);
+    }
+
+    function parseBuild() {
+        $this->setText("Build ".$this->input['ref']);
+        $this->addActivity($this->input['build_status'],
+            $this->input['user']['name'].": ".$this->input['build_name'],
+            $this->input['user']['avatar_url']);
+
+        $this->addAction('View Repository',$this->input['repository']['git_http_url']);
+    }
+
+    function parseWikiPage() {
+        $this->setText("WikiPage ".$this->input['object_attributes']['title']." (".$this->input['object_attributes']['action'].")");
+        $this->addActivity($this->input['object_attributes']['message'],
+            $this->input['user']['name'].": ",
+            $this->input['user']['avatar_url']);
+
+        $this->addAction('View WikiPage',$this->input['object_attributes']['url']);
     }
 }
