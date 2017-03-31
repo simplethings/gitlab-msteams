@@ -82,7 +82,7 @@ class GitlabTeamsMessage extends TeamsMessage {
 
     function parsePush() {
         $this->setText("Push in ".$this->input['ref']);
-        $this->addActivity("hat ".$this->input['total_commits_count']." Commits in ".$this->input['ref']." gepusht.",
+        $this->addActivity("has ".$this->input['total_commits_count']." Commits in ".$this->input['ref']." pushed.",
             $this->input['user_name'],
             $this->input['user_avatar']);
 
