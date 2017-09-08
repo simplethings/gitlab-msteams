@@ -10,10 +10,10 @@ class TeamsMessage {
     public function __construct($text = null, $title = null)
     {
         if ($text !== null) {
-            $this->setTitle($text);
+            $this->setText($text);
         }
         if ($title !== null) {
-            $this->SetTitle($title);
+            $this->setTitle($title);
         }
     }
 
